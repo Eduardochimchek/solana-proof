@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+/// A certificate whose fingerprint (SHA-256) has been anchored on the
+/// Solana blockchain via the Memo Program. The platform never stores the
+/// original file or statement content, only its hash and metadata.
+model Certificate {
+  id                   String   @id @default(cuid())
+  title                String
+  description          String?
+  recipientName        String?
+
+  /// "statement" for free-text declarations or "document" for uploaded files.
+  sourceType           String   @default("statement")
+  fileName             String?
+  fileSize             Int?
+  mimeType             String?
+
+  /// SHA-256 hex digest that was written on-chain.
+  documentHash         String   @unique
+  /// Wallet that signed and paid for the on-chain transaction.
+  walletAddress        String
+  /// Solana transaction signature proving the on-chain anchoring.
+  transactionSignature String   @unique
+  network              String   @default("devnet")
+
+  createdAt            DateTime @default(now())
+
+  @@index([walletAddress])
+  @@index([createdAt])
+}
