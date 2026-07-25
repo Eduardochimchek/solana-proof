@@ -191,7 +191,7 @@ solana-proof/
 
 ```bash
 # 1. Clonar o repositório
-git clone https://github.com/eduardojeronimo/solana-proof.git
+git clone https://github.com/Eduardochimchek/solana-proof.git
 cd solana-proof
 
 # 2. Instalar dependências

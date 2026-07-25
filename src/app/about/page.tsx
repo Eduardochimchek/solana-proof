@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Lock, ShieldCheck, Sparkles } from "lucide-react";
 
-import { GitHubIcon } from "@/components/shared/brand-icons";
+import { GitHubIcon, LinkedInIcon } from "@/components/shared/brand-icons";
 import { PageHeader } from "@/components/shared/page-header";
+import { GITHUB_REPO_URL, LINKEDIN_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Sobre",
@@ -74,15 +75,26 @@ export default function AboutPage() {
           Desenvolvido por Eduardo Jeronimo como projeto full stack com integração real
           à blockchain Solana.
         </p>
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-foreground hover:underline"
-        >
-          <GitHubIcon className="size-4" />
-          Ver repositório no GitHub
-        </a>
+        <div className="mt-4 flex flex-wrap gap-4">
+          <a
+            href={GITHUB_REPO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:underline"
+          >
+            <GitHubIcon className="size-4" />
+            Ver repositório no GitHub
+          </a>
+          <a
+            href={LINKEDIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:underline"
+          >
+            <LinkedInIcon className="size-4" />
+            LinkedIn
+          </a>
+        </div>
       </div>
     </div>
   );

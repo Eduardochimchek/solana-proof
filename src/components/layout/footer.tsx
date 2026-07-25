@@ -1,7 +1,8 @@
 import Link from "next/link";
 
-import { GitHubIcon, XIcon } from "@/components/shared/brand-icons";
+import { GitHubIcon, LinkedInIcon } from "@/components/shared/brand-icons";
 import { Logo } from "@/components/shared/logo";
+import { GITHUB_REPO_URL, LINKEDIN_URL } from "@/lib/site";
 
 const PRODUCT_LINKS = [
   { href: "/create", label: "Criar certificado" },
@@ -30,10 +31,10 @@ export function Footer() {
         <FooterColumn title="Recursos" links={RESOURCE_LINKS} />
 
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold">Comunidade</h3>
+          <h3 className="text-sm font-semibold">Autor</h3>
           <div className="flex gap-3">
             <a
-              href="https://github.com"
+              href={GITHUB_REPO_URL}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -42,13 +43,13 @@ export function Footer() {
               <GitHubIcon className="size-4" />
             </a>
             <a
-              href="https://twitter.com"
+              href={LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Twitter"
+              aria-label="LinkedIn"
               className="flex size-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground"
             >
-              <XIcon className="size-4" />
+              <LinkedInIcon className="size-4" />
             </a>
           </div>
         </div>

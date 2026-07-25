@@ -22,4 +22,4 @@ e este projeto segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - SEO completo: metadata dinâmica, Open Graph, Twitter Card, sitemap, robots.txt e manifest PWA gerados via código.
 - Persistência com Prisma e PostgreSQL (Neon), com migrations aplicadas automaticamente no build de produção.
 
-[Unreleased]: https://github.com/eduardojeronimo/solana-proof/commits/main
+[Unreleased]: https://github.com/Eduardochimchek/solana-proof/commits/main
