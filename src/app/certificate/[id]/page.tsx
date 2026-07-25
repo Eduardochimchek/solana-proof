@@ -20,7 +20,7 @@ export async function generateMetadata({
 
   return {
     title: certificate.title,
-    description: `Certificado verificado on-chain na Solana Devnet — hash ${certificate.documentHash}.`,
+    description: `Certificado verificado on-chain na Solana Devnet. Hash: ${certificate.documentHash}.`,
   };
 }
 

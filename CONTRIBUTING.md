@@ -8,11 +8,11 @@ Siga as instruções da seção [Instalação e execução local](./README.md#in
 
 ## Padrões de código
 
-- **TypeScript estrito** — evite `any`; prefira tipos explícitos e inferência quando possível.
-- **Separação de camadas** — regras de negócio pertencem a `services/`, acesso a dados a `repositories/`, validação de entrada a `validators/`. Rotas de API (`app/api/**`) devem apenas orquestrar essas camadas.
+- **TypeScript estrito**: evite `any`; prefira tipos explícitos e inferência quando possível.
+- **Separação de camadas**: regras de negócio pertencem a `services/`, acesso a dados a `repositories/`, validação de entrada a `validators/`. Rotas de API (`app/api/**`) devem apenas orquestrar essas camadas.
 - **Componentes reutilizáveis** ficam em `components/shared/`; componentes específicos de um domínio ficam na pasta correspondente (`components/certificates/`, `components/dashboard/` etc.).
-- **Nomes claros e descritivos** — evite abreviações ambíguas.
-- **Sem comentários óbvios** — comente apenas decisões não triviais, não o que o código já expressa por si.
+- **Nomes claros e descritivos**: evite abreviações ambíguas.
+- **Sem comentários óbvios**: comente apenas decisões não triviais, não o que o código já expressa por si.
 - Rode `pnpm lint` e `pnpm typecheck` antes de abrir um Pull Request.
 
 ## Commits

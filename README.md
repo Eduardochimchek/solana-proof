@@ -4,7 +4,7 @@
 
 **Certificação digital com prova criptográfica permanente na blockchain Solana.**
 
-Emita, ancore e verifique certificados de forma não-custodial, rápida e pública — construído para o desafio Superteam Brasil no TDC Floripa 2026.
+Emita, ancore e verifique certificados de forma não-custodial, rápida e pública. Projeto do desafio Superteam Brasil no TDC Floripa 2026.
 
 [Visão geral](#visão-geral) ·
 [Funcionalidades](#funcionalidades) ·
@@ -21,7 +21,7 @@ Emita, ancore e verifique certificados de forma não-custodial, rápida e públi
 
 **Solana Proof** é uma plataforma que permite a qualquer pessoa emitir um certificado digital (uma declaração de texto ou um documento) e registrar sua **impressão digital criptográfica** (SHA-256) de forma imutável na blockchain Solana, através do **Memo Program** oficial.
 
-O resultado é uma prova de existência e integridade verificável publicamente por qualquer pessoa, a qualquer momento, sem depender da confiança na plataforma que a emitiu — apenas na blockchain.
+O resultado é uma prova de existência e integridade verificável publicamente por qualquer pessoa, a qualquer momento, sem depender da confiança na plataforma que a emitiu. A confiança fica só na blockchain.
 
 ### Motivação
 
@@ -29,20 +29,20 @@ Diplomas, declarações, contratos e atestados frequentemente dependem inteirame
 
 O Solana Proof resolve esse problema com um princípio simples: **o conteúdo nunca sai do controle do usuário, apenas seu hash é ancorado on-chain.** Isso garante:
 
-- **Verificabilidade pública** — qualquer pessoa pode confirmar que um hash específico foi registrado em um momento específico, por uma carteira específica.
-- **Privacidade por padrão** — o conteúdo original (texto ou arquivo) nunca é armazenado nos servidores da aplicação, apenas seu hash.
-- **Não custodiedade** — o usuário assina e paga a própria transação com sua carteira Phantom; a aplicação nunca tem custódia de fundos ou chaves.
-- **Auditabilidade permanente** — o registro vive na blockchain, não em um banco de dados que pode ser apagado ou corrompido.
+- **Verificabilidade pública**: qualquer pessoa pode confirmar que um hash específico foi registrado em um momento específico, por uma carteira específica.
+- **Privacidade por padrão**: o conteúdo original (texto ou arquivo) nunca é armazenado nos servidores da aplicação, apenas seu hash.
+- **Não custodiedade**: o usuário assina e paga a própria transação com sua carteira Phantom; a aplicação nunca tem custódia de fundos ou chaves.
+- **Auditabilidade permanente**: o registro vive na blockchain, não em um banco de dados que pode ser apagado ou corrompido.
 
 ### Fluxo do produto
 
 1. O usuário acessa a landing page e conecta sua carteira Phantom (Solana Devnet).
-2. Preenche um formulário de certificado — uma declaração de texto ou um documento (PDF, imagem etc.).
+2. Preenche um formulário de certificado: declaração de texto ou documento (PDF, imagem etc.).
 3. O backend calcula o hash **SHA-256** do conteúdo e monta uma transação Solana com uma instrução do **Memo Program** contendo esse hash.
 4. O usuário assina a transação na própria carteira (a aplicação nunca tem acesso à chave privada).
 5. O backend confirma a transação on-chain, valida seu conteúdo e persiste os metadados do certificado localmente.
 6. O usuário recebe uma página pública de verificação, compartilhável com qualquer pessoa.
-7. Qualquer visitante pode verificar a autenticidade por hash, assinatura de transação ou ID do certificado — sem precisar de conta ou carteira.
+7. Qualquer visitante pode verificar a autenticidade por hash, assinatura de transação ou ID do certificado, sem precisar de conta ou carteira.
 
 ---
 
@@ -52,7 +52,7 @@ O Solana Proof resolve esse problema com um princípio simples: **o conteúdo nu
 - **Criação de certificados** a partir de declarações de texto ou upload de documentos, com validação client e server-side.
 - **Hash SHA-256** determinístico calculado no servidor, nunca no cliente, evitando divergências e manipulação.
 - **Registro on-chain na Solana Devnet** usando o Memo Program oficial, sem programas customizados ou contratos próprios.
-- **Verificação pública** por hash, assinatura de transação ou ID — sem necessidade de autenticação.
+- **Verificação pública** por hash, assinatura de transação ou ID, sem necessidade de autenticação.
 - **Verificação real on-chain**: o backend não confia apenas no banco de dados local, ele revalida a transação diretamente na blockchain a cada consulta pública.
 - **Dashboard pessoal** com estatísticas e histórico de certificados emitidos pela carteira conectada.
 - **Página de certificado compartilhável**, pronta para ser usada como prova pública (ex: em um currículo ou processo seletivo).
@@ -77,7 +77,7 @@ Nenhuma rota contém regra de negócio: elas apenas validam a entrada, delegam a
 
 ### Por que o Memo Program em vez de um programa on-chain próprio?
 
-Escrever e auditar um programa Solana customizado (via Anchor, por exemplo) adiciona superfície de risco significativa — chaves de upgrade, testes de segurança, auditoria de conta — sem agregar valor real ao caso de uso. O **Memo Program** é um programa oficial, mantido pela Solana Labs, extremamente utilizado em produção (exchanges, provedores de identidade, sistemas de anotação) especificamente para anexar dados arbitrários e verificáveis a uma transação. Ele entrega exatamente o que este produto precisa — um registro imutável, público e datado — com o mínimo de superfície de ataque e máxima simplicidade.
+Escrever e auditar um programa Solana customizado (via Anchor, por exemplo) adiciona superfície de risco significativa (chaves de upgrade, testes de segurança, auditoria de conta) sem agregar valor real ao caso de uso. O **Memo Program** é um programa oficial, mantido pela Solana Labs, extremamente utilizado em produção (exchanges, provedores de identidade, sistemas de anotação) especificamente para anexar dados arbitrários e verificáveis a uma transação. Ele entrega exatamente o que este produto precisa: um registro imutável, público e datado, com o mínimo de superfície de ataque e máxima simplicidade.
 
 ### Por que verificação on-chain ativa, e não apenas leitura do banco local?
 
@@ -88,7 +88,7 @@ O endpoint de verificação pública não confia cegamente nos dados salvos no P
 - o memo corresponde exatamente ao hash esperado;
 - a carteira registrada como emissora é de fato a `fee payer` da transação.
 
-Isso significa que a verdadeira fonte de verdade é a blockchain — o banco de dados local funciona como um índice de conveniência para busca e exibição, não como autoridade.
+Isso significa que a verdadeira fonte de verdade é a blockchain. O banco de dados local funciona como um índice de conveniência para busca e exibição, não como autoridade.
 
 ### Fluxo de assinatura (não-custodial)
 
@@ -184,7 +184,7 @@ solana-proof/
 
 - [Node.js 20+](https://nodejs.org)
 - [pnpm](https://pnpm.io) (`npm install -g pnpm`)
-- Um banco [Neon](https://neon.tech) PostgreSQL (tier gratuito) — pode ser criado em segundos, direto pela aba **Storage** de um projeto na Vercel, ou em [neon.tech](https://neon.tech)
+- Um banco [Neon](https://neon.tech) PostgreSQL (tier gratuito), que pode ser criado em segundos pela aba **Storage** de um projeto na Vercel ou em [neon.tech](https://neon.tech)
 - A [extensão Phantom Wallet](https://phantom.app) instalada no navegador, configurada para a rede **Devnet**
 
 ### Passo a passo
@@ -254,9 +254,9 @@ Nenhuma chave privada, seed phrase ou credencial de carteira é solicitada ou ar
 
 - **Rede:** Solana Devnet (ambiente de testes, sem valor monetário real).
 - **Programa utilizado:** [Memo Program](https://spl.solana.com/memo) (`MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr`), mantido pela Solana Labs.
-- **Formato do memo:** `solana-proof:v1:<hash-sha256-hex>` — um namespace de versão simples que permite evoluir o formato no futuro sem ambiguidade.
+- **Formato do memo:** `solana-proof:v1:<hash-sha256-hex>`, um namespace de versão simples que permite evoluir o formato no futuro sem ambiguidade.
 - **Carteira suportada:** Phantom, via [Solana Wallet Adapter](https://github.com/anza-xyz/wallet-adapter) (padrão aberto compatível com qualquer carteira que implemente a especificação).
-- **Verificação:** cada consulta pública busca a transação diretamente do RPC da Solana e revalida o conteúdo do memo, o status de confirmação e o autor da transação — o servidor nunca confia apenas no registro local.
+- **Verificação:** cada consulta pública busca a transação diretamente do RPC da Solana e revalida o conteúdo do memo, o status de confirmação e o autor da transação. O servidor nunca confia apenas no registro local.
 - **Exploração:** toda transação e certificado exibem um link direto para o [Solana Explorer](https://explorer.solana.com) na Devnet, permitindo auditoria independente por qualquer pessoa.
 
 ---
@@ -264,11 +264,11 @@ Nenhuma chave privada, seed phrase ou credencial de carteira é solicitada ou ar
 ## Decisões técnicas
 
 - **Next.js App Router com API Routes**, em vez de um backend separado: mantém o projeto coeso, reduz a complexidade de deploy e ainda preserva a separação de camadas (rota → service → repository) dentro do próprio projeto.
-- **PostgreSQL (Neon) tanto em desenvolvimento quanto em produção**: a primeira versão do projeto usava SQLite localmente por simplicidade, mas essa abordagem foi abandonada em favor de um único provedor — SQLite não é viável em ambientes serverless (sem sistema de arquivos persistente entre invocações) e manter dois dialetos de banco distintos introduz risco real de divergência entre schema de desenvolvimento e produção. O Neon oferece um tier gratuito com provisionamento em segundos, eliminando o principal argumento a favor do SQLite.
-- **Prisma 7 com Driver Adapters** (`@prisma/adapter-neon`, sobre o driver serverless da Neon): abordagem recomendada pela versão mais recente do Prisma, otimizada para ambientes serverless — usa uma conexão pooled (`DATABASE_URL`) para queries da aplicação e uma conexão direta (`DATABASE_URL_UNPOOLED`) para as migrations do Prisma Migrate.
+- **PostgreSQL (Neon) tanto em desenvolvimento quanto em produção**: a primeira versão do projeto usava SQLite localmente por simplicidade, mas essa abordagem foi abandonada em favor de um único provedor. SQLite não é viável em ambientes serverless (sem sistema de arquivos persistente entre invocações) e manter dois dialetos de banco distintos introduz risco real de divergência entre schema de desenvolvimento e produção. O Neon oferece um tier gratuito com provisionamento em segundos, eliminando o principal argumento a favor do SQLite.
+- **Prisma 7 com Driver Adapters** (`@prisma/adapter-neon`, sobre o driver serverless da Neon): abordagem recomendada pela versão mais recente do Prisma, otimizada para ambientes serverless. Usa uma conexão pooled (`DATABASE_URL`) para queries da aplicação e uma conexão direta (`DATABASE_URL_UNPOOLED`) para as migrations do Prisma Migrate.
 - **Migrations aplicadas automaticamente no build** (`prisma migrate deploy && next build`): garante que o schema de produção esteja sempre sincronizado com o código implantado, sem passos manuais no fluxo de deploy da Vercel.
 - **Hash calculado exclusivamente no servidor**: evita que o hash seja manipulado no cliente antes de ser ancorado on-chain, garantindo que o valor registrado corresponda exatamente ao conteúdo enviado.
-- **Nenhum conteúdo original é persistido**: apenas metadados (título, descrição, nome do arquivo) e o hash são armazenados — o conteúdo em si nunca é salvo, por design de privacidade.
+- **Nenhum conteúdo original é persistido**: apenas metadados (título, descrição, nome do arquivo) e o hash são armazenados. O conteúdo em si nunca é salvo, por design de privacidade.
 - **Erros internos nunca vazam para o cliente**: qualquer exceção inesperada é registrada no servidor e retorna uma mensagem genérica ao usuário, evitando exposição de detalhes de implementação.
 - **`next/og` para geração de imagens de metadata**: ícones, Open Graph e Twitter Card são gerados via código (`ImageResponse`), garantindo consistência visual com o design system sem depender de arquivos estáticos exportados manualmente.
 
@@ -278,7 +278,7 @@ Nenhuma chave privada, seed phrase ou credencial de carteira é solicitada ou ar
 
 - A aplicação é **não-custodial**: nenhuma chave privada ou seed phrase é solicitada, transmitida ou armazenada.
 - Toda assinatura de transação ocorre no navegador do usuário, através da extensão Phantom.
-- O conteúdo original de declarações e documentos **nunca é persistido** — apenas seu hash SHA-256.
+- O conteúdo original de declarações e documentos **nunca é persistido**; apenas seu hash SHA-256.
 - Toda entrada de API é validada com schemas Zod antes de qualquer processamento.
 - Uploads de arquivo possuem limite de tamanho e validação de tipo.
 - A verificação pública revalida a transação diretamente na blockchain, em vez de confiar apenas no banco local.
@@ -304,6 +304,6 @@ Distribuído sob a licença MIT. Veja [`LICENSE`](./LICENSE) para mais informaç
 
 <div align="center">
 
-Desenvolvido por **Eduardo Jeronimo** para o desafio Superteam Brasil — TDC Floripa 2026.
+Desenvolvido por **Eduardo Jeronimo** para o desafio Superteam Brasil no TDC Floripa 2026.
 
 </div>

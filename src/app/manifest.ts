@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Solana Proof — Certificação digital na blockchain Solana",
+    name: "Solana Proof | Certificação digital na blockchain Solana",
     short_name: "Solana Proof",
     description:
       "Emita certificados digitais com prova criptográfica permanente na blockchain Solana.",

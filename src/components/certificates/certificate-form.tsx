@@ -95,7 +95,7 @@ export function CertificateForm() {
           <p className="text-xs text-muted-foreground">
             {mode === "statement"
               ? "Registre uma afirmação textual com hash gerado a partir do conteúdo informado."
-              : "Envie um arquivo. Apenas sua impressão digital (hash) é registrada — nunca armazenamos o arquivo."}
+              : "Envie um arquivo. Apenas sua impressão digital (hash) é registrada. Nunca armazenamos o arquivo."}
           </p>
         </div>
 

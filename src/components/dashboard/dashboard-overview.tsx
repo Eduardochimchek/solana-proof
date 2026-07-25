@@ -29,7 +29,7 @@ export function DashboardOverview() {
             value={
               lastIssuedAt
                 ? format(new Date(lastIssuedAt), "dd MMM yyyy", { locale: ptBR })
-                : "—"
+                : "Sem emissões"
             }
           />
         </div>

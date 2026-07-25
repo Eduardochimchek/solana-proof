@@ -4,7 +4,7 @@ import { BRAND_GRADIENT, ShieldMark } from "@/lib/brand-mark";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Solana Proof — Certificação digital na blockchain Solana";
+export const alt = "Solana Proof | Certificação digital na blockchain Solana";
 
 export default function OpengraphImage() {
   return new ImageResponse(

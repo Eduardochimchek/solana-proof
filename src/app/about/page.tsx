@@ -15,7 +15,7 @@ const PRINCIPLES = [
     icon: Lock,
     title: "Privacidade por padrão",
     description:
-      "Nunca armazenamos o conteúdo de arquivos ou declarações — apenas o hash criptográfico necessário para prová-los.",
+      "Nunca armazenamos o conteúdo de arquivos ou declarações, apenas o hash criptográfico necessário para prová-los.",
   },
   {
     icon: ShieldCheck,
@@ -47,7 +47,7 @@ export default function AboutPage() {
           A resposta moderna para esse problema é a blockchain. Ao registrar a
           impressão digital (hash) de um conteúdo em um livro-razão público,
           descentralizado e imutável, qualquer pessoa pode verificar, para sempre, que
-          aquele conteúdo específico existia naquele instante — sem precisar confiar em
+          aquele conteúdo específico existia naquele instante, sem precisar confiar em
           nada além de matemática.
         </p>
         <p>

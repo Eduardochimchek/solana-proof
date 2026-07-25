@@ -21,7 +21,7 @@ export function HeroSection() {
           <p className="max-w-lg text-lg text-muted-foreground">
             Solana Proof gera uma impressão digital criptográfica do seu
             certificado e a ancora permanentemente na blockchain Solana.
-            Verificável por qualquer pessoa, a qualquer momento — sem
+            Verificável por qualquer pessoa, a qualquer momento, sem
             intermediários.
           </p>
 

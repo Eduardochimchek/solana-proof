@@ -31,7 +31,7 @@ const SECTIONS = [
           enviados ao servidor.
         </li>
         <li>
-          O servidor calcula o hash SHA-256 do conteúdo — do arquivo, se enviado, ou de
+          O servidor calcula o hash SHA-256 do conteúdo (do arquivo, se enviado, ou de
           uma representação canônica dos campos preenchidos.
         </li>
         <li>
@@ -39,7 +39,7 @@ const SECTIONS = [
           Program com o payload <code className="rounded bg-muted px-1 py-0.5 text-xs">solana-proof:v1:&lt;hash&gt;</code>.
         </li>
         <li>
-          A carteira do usuário assina e envia a transação — o próprio usuário paga a
+          A carteira do usuário assina e envia a transação. O próprio usuário paga a
           taxa de rede, tornando o processo não-custodial.
         </li>
         <li>
@@ -70,7 +70,7 @@ const SECTIONS = [
     title: "Privacidade e armazenamento",
     content: (
       <p>
-        O conteúdo original de arquivos enviados nunca é armazenado — ele é processado
+        O conteúdo original de arquivos enviados nunca é armazenado. Ele é processado
         em memória apenas para o cálculo do hash e imediatamente descartado. O banco de
         dados guarda somente metadados descritivos (título, descrição, destinatário) e
         a prova criptográfica (hash e assinatura da transação).

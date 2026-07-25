@@ -25,7 +25,7 @@ const FEATURES = [
     icon: Search,
     title: "Verificação pública",
     description:
-      "Qualquer pessoa pode validar um certificado pelo hash, assinatura ou link direto — sem precisar de conta.",
+      "Qualquer pessoa pode validar um certificado pelo hash, assinatura ou link direto, sem precisar de conta.",
   },
   {
     icon: Eye,

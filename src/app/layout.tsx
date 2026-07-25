@@ -24,7 +24,7 @@ const APP_DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: "Solana Proof — Certificação digital na blockchain Solana",
+    default: "Solana Proof | Certificação digital na blockchain Solana",
     template: "%s · Solana Proof",
   },
   description: APP_DESCRIPTION,
@@ -42,13 +42,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     url: APP_URL,
-    title: "Solana Proof — Certificação digital na blockchain Solana",
+    title: "Solana Proof | Certificação digital na blockchain Solana",
     description: APP_DESCRIPTION,
     siteName: "Solana Proof",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Solana Proof — Certificação digital na blockchain Solana",
+    title: "Solana Proof | Certificação digital na blockchain Solana",
     description: APP_DESCRIPTION,
   },
   manifest: "/manifest.webmanifest",
