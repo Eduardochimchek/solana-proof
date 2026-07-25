@@ -96,7 +96,7 @@ const SECTIONS = [
       <ul className="list-disc space-y-1 pl-5">
         <li>Next.js (App Router) com TypeScript</li>
         <li>TailwindCSS e shadcn/ui</li>
-        <li>Prisma ORM com SQLite (desenvolvimento) e PostgreSQL (produção)</li>
+        <li>Prisma ORM com PostgreSQL (Neon)</li>
         <li>Solana Web3.js e Wallet Adapter</li>
         <li>TanStack Query para gerenciamento de estado assíncrono</li>
       </ul>

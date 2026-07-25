@@ -81,7 +81,7 @@ Escrever e auditar um programa Solana customizado (via Anchor, por exemplo) adic
 
 ### Por que verificação on-chain ativa, e não apenas leitura do banco local?
 
-O endpoint de verificação pública não confia cegamente nos dados salvos no SQLite/PostgreSQL. Ele recupera a transação diretamente da rede Solana (via RPC) e confirma que:
+O endpoint de verificação pública não confia cegamente nos dados salvos no PostgreSQL. Ele recupera a transação diretamente da rede Solana (via RPC) e confirma que:
 
 - a transação foi confirmada com sucesso (sem erros de execução);
 - ela contém uma instrução do Memo Program;
@@ -130,7 +130,7 @@ A chave privada do usuário nunca trafega para o servidor. O backend apenas mont
 | Componentes | shadcn/ui (Base UI) | Componentes acessíveis, sem *vendor lock-in*, totalmente customizáveis |
 | Ícones | Lucide Icons | Biblioteca de ícones consistente e leve |
 | ORM | Prisma 7 | Tipagem gerada automaticamente a partir do schema, migrations versionadas |
-| Banco de dados | SQLite (dev) → PostgreSQL (produção) | Zero setup em desenvolvimento; PostgreSQL para persistência concorrente em produção |
+| Banco de dados | PostgreSQL (Neon) | Serverless, com tier gratuito, mesmo provedor em desenvolvimento e produção |
 | Blockchain | [@solana/web3.js](https://solana.com/developers) + Memo Program oficial | Biblioteca oficial da Solana Foundation para construção e envio de transações |
 | Carteira | Solana Wallet Adapter (Phantom) | Padrão oficial do ecossistema Solana para integração de carteiras |
 | Formulários | React Hook Form + Zod | Validação declarativa, tipada e compartilhada entre client e server |
@@ -184,6 +184,7 @@ solana-proof/
 
 - [Node.js 20+](https://nodejs.org)
 - [pnpm](https://pnpm.io) (`npm install -g pnpm`)
+- Um banco [Neon](https://neon.tech) PostgreSQL (tier gratuito) — pode ser criado em segundos, direto pela aba **Storage** de um projeto na Vercel, ou em [neon.tech](https://neon.tech)
 - A [extensão Phantom Wallet](https://phantom.app) instalada no navegador, configurada para a rede **Devnet**
 
 ### Passo a passo
@@ -198,9 +199,12 @@ pnpm install
 
 # 3. Configurar variáveis de ambiente
 cp .env.example .env
+# Preencha DATABASE_URL e DATABASE_URL_UNPOOLED com a string de conexão do seu banco Neon.
+# Se o projeto já estiver vinculado a um projeto Vercel com Neon conectado, você pode
+# obter essas variáveis automaticamente com: npx vercel env pull .env
 
-# 4. Aplicar o schema do banco de dados (SQLite local)
-pnpm prisma migrate dev
+# 4. Aplicar o schema do banco de dados
+pnpm prisma migrate deploy
 
 # 5. Iniciar o servidor de desenvolvimento
 pnpm dev
@@ -226,7 +230,8 @@ Como a aplicação opera na **Solana Devnet**, você precisa de SOL de teste (se
 | `pnpm lint` | Executa o ESLint |
 | `pnpm typecheck` | Verifica os tipos com o TypeScript (sem emitir arquivos) |
 | `pnpm prisma studio` | Abre uma interface visual para o banco de dados |
-| `pnpm prisma migrate dev` | Cria e aplica uma nova migration em desenvolvimento |
+| `pnpm prisma migrate dev` | Cria e aplica uma nova migration a partir de alterações no schema |
+| `pnpm prisma migrate deploy` | Aplica migrations pendentes (usado em desenvolvimento e no build de produção) |
 
 ---
 
@@ -236,7 +241,8 @@ Todas as variáveis estão documentadas em [`.env.example`](./.env.example).
 
 | Variável | Obrigatória | Descrição |
 |---|---|---|
-| `DATABASE_URL` | Sim | String de conexão do banco de dados. `file:./dev.db` em desenvolvimento; string de conexão PostgreSQL em produção. |
+| `DATABASE_URL` | Sim | String de conexão PostgreSQL pooled (via PgBouncer), usada pela aplicação em runtime. |
+| `DATABASE_URL_UNPOOLED` | Sim | String de conexão PostgreSQL direta, usada pelo Prisma Migrate (a pool em modo transaction não suporta os locks que as migrations exigem). |
 | `NEXT_PUBLIC_SOLANA_RPC_URL` | Não | Endpoint RPC customizado da Solana Devnet. Se vazio, usa o endpoint público `api.devnet.solana.com`. Recomendado usar um provedor dedicado (Helius, QuickNode) em produção para maior confiabilidade. |
 | `NEXT_PUBLIC_APP_URL` | Sim | URL pública da aplicação, usada em metadados de SEO, Open Graph e no sitemap. |
 
@@ -258,8 +264,9 @@ Nenhuma chave privada, seed phrase ou credencial de carteira é solicitada ou ar
 ## Decisões técnicas
 
 - **Next.js App Router com API Routes**, em vez de um backend separado: mantém o projeto coeso, reduz a complexidade de deploy e ainda preserva a separação de camadas (rota → service → repository) dentro do próprio projeto.
-- **SQLite em desenvolvimento, PostgreSQL em produção**: elimina a necessidade de infraestrutura externa durante o desenvolvimento, mantendo o schema Prisma totalmente portável entre os dois provedores.
-- **Prisma 7 com Driver Adapters** (`@prisma/adapter-better-sqlite3`): abordagem recomendada pela versão mais recente do Prisma, com melhor performance e compatibilidade com ambientes serverless.
+- **PostgreSQL (Neon) tanto em desenvolvimento quanto em produção**: a primeira versão do projeto usava SQLite localmente por simplicidade, mas essa abordagem foi abandonada em favor de um único provedor — SQLite não é viável em ambientes serverless (sem sistema de arquivos persistente entre invocações) e manter dois dialetos de banco distintos introduz risco real de divergência entre schema de desenvolvimento e produção. O Neon oferece um tier gratuito com provisionamento em segundos, eliminando o principal argumento a favor do SQLite.
+- **Prisma 7 com Driver Adapters** (`@prisma/adapter-neon`, sobre o driver serverless da Neon): abordagem recomendada pela versão mais recente do Prisma, otimizada para ambientes serverless — usa uma conexão pooled (`DATABASE_URL`) para queries da aplicação e uma conexão direta (`DATABASE_URL_UNPOOLED`) para as migrations do Prisma Migrate.
+- **Migrations aplicadas automaticamente no build** (`prisma migrate deploy && next build`): garante que o schema de produção esteja sempre sincronizado com o código implantado, sem passos manuais no fluxo de deploy da Vercel.
 - **Hash calculado exclusivamente no servidor**: evita que o hash seja manipulado no cliente antes de ser ancorado on-chain, garantindo que o valor registrado corresponda exatamente ao conteúdo enviado.
 - **Nenhum conteúdo original é persistido**: apenas metadados (título, descrição, nome do arquivo) e o hash são armazenados — o conteúdo em si nunca é salvo, por design de privacidade.
 - **Erros internos nunca vazam para o cliente**: qualquer exceção inesperada é registrada no servidor e retorna uma mensagem genérica ao usuário, evitando exposição de detalhes de implementação.

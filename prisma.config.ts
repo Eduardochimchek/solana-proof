@@ -9,6 +9,9 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    // Migrations run through the direct (unpooled) connection; PgBouncer's
+    // transaction pooling mode does not support the advisory locks Prisma
+    // Migrate relies on.
+    url: process.env["DATABASE_URL_UNPOOLED"] ?? process.env["DATABASE_URL"],
   },
 });

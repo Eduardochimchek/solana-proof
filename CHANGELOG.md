@@ -20,6 +20,6 @@ e este projeto segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Páginas institucionais: Sobre e Documentação.
 - Estados de carregamento (skeletons), estados vazios, *error boundaries* e notificações (toasts) em toda a aplicação.
 - SEO completo: metadata dinâmica, Open Graph, Twitter Card, sitemap, robots.txt e manifest PWA gerados via código.
-- Persistência local com Prisma (SQLite em desenvolvimento).
+- Persistência com Prisma e PostgreSQL (Neon), com migrations aplicadas automaticamente no build de produção.
 
 [Unreleased]: https://github.com/eduardojeronimo/solana-proof/commits/main

@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Certificate" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
     "recipientName" TEXT,
@@ -12,7 +12,9 @@ CREATE TABLE "Certificate" (
     "walletAddress" TEXT NOT NULL,
     "transactionSignature" TEXT NOT NULL,
     "network" TEXT NOT NULL DEFAULT 'devnet',
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Certificate_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

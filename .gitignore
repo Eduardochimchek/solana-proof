@@ -37,18 +37,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# legacy local SQLite artifact (project now uses PostgreSQL everywhere)
+/dev.db
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# database
-/prisma/dev.db
-/prisma/dev.db-journal
-/prisma/*.db
-/dev.db
-/dev.db-journal
-*.db
-*.db-journal
 
 # prisma generated client
 /src/generated/
@@ -60,5 +54,3 @@ next-env.d.ts
 
 # logs
 *.log
-
-/src/generated/prisma
