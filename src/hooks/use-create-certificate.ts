@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { base64ToUint8Array } from "@/lib/base64";
+import { isTransactionExpiredError, toWalletErrorMessage } from "@/lib/wallet-errors";
 import type { CertificateDto, PrepareCertificateResponse } from "@/types/certificate";
 
 export interface CreateCertificateInput {
@@ -94,25 +95,40 @@ export function useCreateCertificate() {
 
         toast.loading("Aguardando assinatura na carteira...", { id: toastId });
         const transaction = Transaction.from(base64ToUint8Array(prepared.transaction));
+
+        // The server builds the transaction with a blockhash that may expire while
+        // the user reviews the Phantom prompt. Refresh it immediately before send.
+        const { blockhash, lastValidBlockHeight } =
+          await connection.getLatestBlockhash("confirmed");
+        transaction.recentBlockhash = blockhash;
+        transaction.lastValidBlockHeight = lastValidBlockHeight;
+
         const signature = await sendTransaction(transaction, connection);
 
         toast.loading("Confirmando na blockchain Solana...", { id: toastId });
-        await connection.confirmTransaction(
-          {
-            signature,
-            blockhash: transaction.recentBlockhash!,
-            lastValidBlockHeight: transaction.lastValidBlockHeight!,
-          },
-          "confirmed",
-        );
+        try {
+          await connection.confirmTransaction(
+            { signature, blockhash, lastValidBlockHeight },
+            "confirmed",
+          );
+        } catch (confirmError) {
+          if (isTransactionExpiredError(confirmError)) {
+            const status = await connection.getSignatureStatus(signature);
+            const landed =
+              status.value?.confirmationStatus === "confirmed" ||
+              status.value?.confirmationStatus === "finalized";
+            if (!landed) throw confirmError;
+          } else {
+            throw confirmError;
+          }
+        }
 
         const certificate = await confirmCertificate({ signature, walletAddress, prepared });
 
         toast.success("Certificado registrado on-chain.", { id: toastId });
         return certificate;
       } catch (error) {
-        const message = error instanceof Error ? error.message : "Erro inesperado.";
-        toast.error(message, { id: toastId });
+        toast.error(toWalletErrorMessage(error), { id: toastId });
         throw error;
       }
     },
